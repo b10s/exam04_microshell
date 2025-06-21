@@ -85,10 +85,26 @@ void r_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid) {
 	//printf("%p %p %p %d\n", c, l_pipe, r_pipe, l_pid);
 }
 
-pid_t lr_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid) {
+pid_t m_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid) {
 	printf("[ middle child ]\n");
-	printf("%p %p %p %d\n", c, l_pipe, r_pipe, l_pid);
-	return (0);
+	printf("l [%d][%d], r [%d][%d]\n", l_pipe[0], l_pipe[1], r_pipe[0], r_pipe[1]);
+	pid_t cpid;
+
+	cpid = fork();
+	if (cpid == 0) {
+		close(l_pipe[1]);
+		close(r_pipe[0]);
+		close(0);
+		close(1);
+		dup2(l_pipe[0], 0);
+		dup2(r_pipe[1], 1);
+		execve(c->argv[0], c->argv, NULL); //TODO: execve err handling and envp
+		exit(0);
+	} else {
+		printf("left child pid [%d], right child pid [%d]\n", l_pid, cpid);
+		waitpid(l_pid, NULL, 0);
+		return (cpid);
+	}
 }
 
 void exec_cmds(t_cmd *l)
@@ -105,7 +121,7 @@ void exec_cmds(t_cmd *l)
 	while (l != NULL) {
 		if (l->delim == PIPE) {
 			if (prev_was_pipe == 1) {
-				l_pid = lr_child(l, l_pipe, r_pipe, l_pid);
+				l_pid = m_child(l, l_pipe, r_pipe, l_pid);
 			} else {
 				l_pid = l_child(l, l_pipe, r_pipe);
 			}
