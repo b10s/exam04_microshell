@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #define PIPE 1
 #define SEMI 2
@@ -18,4 +20,5 @@ int ft_strlen(char *s);
 void ft_print_str(char *s);
 void ft_print_strln(char *s);
 void print_cmds(t_cmd *cmd_lst);
+void exec_cmds(t_cmd *l);
 
