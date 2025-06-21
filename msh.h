@@ -20,5 +20,5 @@ int ft_strlen(char *s);
 void ft_print_str(char *s);
 void ft_print_strln(char *s);
 void print_cmds(t_cmd *cmd_lst);
-void exec_cmds(t_cmd *l);
+void exec_cmds(t_cmd *l, char **envp);
 
