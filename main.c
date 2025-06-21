@@ -11,6 +11,11 @@
 
 //TODO: implement cd builtin
 //TODO: fix relative path
+// check the https://github.com/shackbei/microshell-42
+// https://www.thegeekstuff.com/2012/08/lsof-command-examples/
+
+//TODO: test with lsof and valgrind
+
 
 int main(int argc, char **argv, char **envp)
 //int main(int argc, char **argv)
