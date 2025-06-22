@@ -14,6 +14,20 @@ void print_err_execve(char *s) {
 	write(2, "\n", 1);
 }
 
+void print_err_cd_wrong_args() {
+	char *msg = "error: cd: bad arguments\n";
+
+	write(2, msg, ft_strlen(msg));
+}
+
+void print_err_cd_failed(char *s) {
+	char *msg = "error: cd: cannot change directory to ";
+
+	write(2, msg, ft_strlen(msg));
+	write(2, s, ft_strlen(s));
+	write(2, "\n", 1);
+}
+
 void print_cmds(t_cmd *cmd_lst)
 {
 	int i;

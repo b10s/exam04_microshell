@@ -23,8 +23,11 @@ void usual_cmd(t_cmd *c, char **envp);
 pid_t l_child(t_cmd *c, int l_pipe[2], int r_pipe[2], char **envp);
 pid_t m_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid, char **envp);
 void r_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid, char **envp);
+void cd_builtin(t_cmd *c);
 void print_cmds(t_cmd *cmd_lst);
 void dbg_print(char *s);
 void print_err_execve(char *s);
+void print_err_cd_wrong_args();
+void print_err_cd_failed(char *s);
 int ft_strlen(char *s);
 

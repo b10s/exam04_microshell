@@ -40,6 +40,10 @@ void usual_cmd(t_cmd *c, char **envp) {
 	pid_t cpid;
 
 	dbg_print("[ usual cmd ]\n");
+	if (strcmp(c->argv[0], "cd") == 0) {
+		cd_builtin(c);
+		return ;
+	}
 	cpid = fork();
 	if (cpid == 0) {
 		if (execve(c->argv[0], c->argv, envp) == -1)
@@ -66,7 +70,7 @@ pid_t l_child(t_cmd *c, int l_pipe[2], int r_pipe[2], char **envp) {
 			print_err_execve(c->argv[0]);
 		exit(0);
 	} else {
-		return (cpid); //need to spawn right side of a pipe, then wait for left side
+		return (cpid);
 	}
 }
 
@@ -89,7 +93,6 @@ void r_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid, char **envp) {
 		//printf("left child pid [%d], right child pid [%d]\n", l_pid, cpid);
 		waitpid(l_pid, NULL, 0);
 	}
-	//printf("%p %p %p %d\n", c, l_pipe, r_pipe, l_pid);
 }
 
 pid_t m_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid, char **envp) {
@@ -113,5 +116,19 @@ pid_t m_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid, char **envp) 
 		waitpid(l_pid, NULL, 0);
 		return (cpid);
 	}
+}
+
+void cd_builtin(t_cmd *c) {
+	int res;
+
+	res = 0;
+	if (c->argv[1] != NULL && c->argv[2] == NULL) {
+		res = chdir(c->argv[1]);
+	} else {
+		print_err_cd_wrong_args();
+		return ;
+	}
+	if (res == -1)
+		print_err_cd_failed(c->argv[1]);
 }
 

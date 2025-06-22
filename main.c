@@ -31,25 +31,28 @@
 int main(int argc, char **argv, char **envp)
 {
 	int	i;
-	int after_last_delim;
+	int pos_after_last_delim;
 	t_cmd *cmd_lst;
+
+	setvbuf(stdin, NULL, _IONBF, 0);
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
 
 	cmd_lst = NULL;
 	i = 1;
-	after_last_delim = 1;
+	pos_after_last_delim = 1;
 	while(i < argc)
 	{
 		if (strcmp(";", argv[i]) == 0 || strcmp("|", argv[i]) == 0) {
-			add_cmd(&cmd_lst, argv, after_last_delim, i);
-			after_last_delim = i + 1;
+			add_cmd(&cmd_lst, argv, pos_after_last_delim, i);
+			pos_after_last_delim = i + 1;
 		}
 		i++;
 	}
-	add_cmd(&cmd_lst, argv, after_last_delim, i);
+	add_cmd(&cmd_lst, argv, pos_after_last_delim, i);
 	print_cmds(cmd_lst);
-	printf("\n");
+	dbg_print("\n");
 	exec_cmds(cmd_lst, envp);
 	return (0);
 }
-
 
