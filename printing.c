@@ -28,6 +28,13 @@ void print_err_cd_failed(char *s) {
 	write(2, "\n", 1);
 }
 
+void print_fatal_exit() {
+	char *msg = "error: fatal\n";
+
+	write(2, msg, ft_strlen(msg));
+	exit(1);
+}
+
 void print_cmds(t_cmd *cmd_lst)
 {
 	int i;

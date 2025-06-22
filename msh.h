@@ -29,5 +29,6 @@ void dbg_print(char *s);
 void print_err_execve(char *s);
 void print_err_cd_wrong_args();
 void print_err_cd_failed(char *s);
+void print_fatal_exit();
 int ft_strlen(char *s);
 
