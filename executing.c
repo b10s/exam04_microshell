@@ -105,6 +105,8 @@ void r_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid, char **envp) {
 		//printf("left child pid [%d], right child pid [%d]\n", l_pid, cpid);
 		if (waitpid(l_pid, NULL, 0) == -1)
 			print_fatal_exit();
+		if (waitpid(cpid, NULL, 0) == -1)
+			print_fatal_exit();
 	}
 }
 

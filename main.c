@@ -8,16 +8,11 @@
 // https://www.thegeekstuff.com/2012/08/lsof-command-examples/
 
 
-//TODO: implement cd builtin
 
-//TODO: to stderror: if cd has wrong number of args; if cd can't go
-
-//TODO: if any call except execve, and something ends with err - print fatal err
-//	and end programm
+//TODO: exit for some lib calls but not for all (e.g. not for close())
 
 
-
-//TODO: test with lsof and valgrind
+//TODO: test with lsof
 //TODO: find way to ensure no fd leaks (watch process tree and proc fs for fds)
 
 //TODO: try to pass norm and make code better and smaller
@@ -26,6 +21,8 @@
 //TODO: fix relative path
 
 //TODO: optional: check what envp gives to execve and why we need to pass it?
+
+//TODO: optional: read man for all allowed functions
 
 
 int main(int argc, char **argv, char **envp)
