@@ -1,32 +1,16 @@
 #include "./msh.h"
 
-void print_cmds(t_cmd *cmd_lst)
+int ft_strlen(char *s)
 {
-	int i;
-	char **c;
-	char *del;
+	int	res;
 
-	i = 1;
-	while (cmd_lst != NULL)
+	res = 0;
+	while (*s != '\0')
 	{
-		printf("cmd #%d:", i++);
-		if (cmd_lst->delim == PIPE)
-			del = "PIPE";
-		else if (cmd_lst->delim == SEMI)
-			del = "SEMI";
-		if (cmd_lst->delim == LAST)
-			del = "LAST";
-		printf("\tdelim [%s]", del);
-		printf("\tpathname [%s], args [", cmd_lst->argv[0]);
-		c = cmd_lst->argv + 1;
-		while (*c != NULL)
-		{
-			printf("(%s)", *c);
-			c++;
-		}
-		printf("]\n");
-		cmd_lst = cmd_lst->next;
+		res++;
+		s++;
 	}
+	return (res);
 }
 
 void add_cmd(t_cmd **cmd_lst, char **argv, int s, int e)
@@ -56,32 +40,5 @@ void add_cmd(t_cmd **cmd_lst, char **argv, int s, int e)
 			cur = cur->next;
 		cur->next = c;
 	}
-}
-
-void print_err_execve(char *s) {
-	char *msg = "error: cannot execute ";
-
-	write(2, msg, ft_strlen(msg));
-	write(2, s, ft_strlen(s));
-	write(2, "\n", 1);
-}
-
-void dbg_print(char *s) {
-	if (DBG == 1) {
-		write(1, s, ft_strlen(s));
-	}
-}
-
-int ft_strlen(char *s)
-{
-	int	res;
-
-	res = 0;
-	while (*s != '\0')
-	{
-		res++;
-		s++;
-	}
-	return (res);
 }
 

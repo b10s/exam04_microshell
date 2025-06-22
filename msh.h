@@ -18,10 +18,13 @@ typedef struct cmd {
 } t_cmd;
 
 void add_cmd(t_cmd **cmd_lst, char **argv, int s, int e);
-int ft_strlen(char *s);
-void ft_print_str(char *s);
-void ft_print_strln(char *s);
-void print_cmds(t_cmd *cmd_lst);
 void exec_cmds(t_cmd *l, char **envp);
-void print_err_execve(char *s);
+void usual_cmd(t_cmd *c, char **envp);
+pid_t l_child(t_cmd *c, int l_pipe[2], int r_pipe[2], char **envp);
+pid_t m_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid, char **envp);
+void r_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid, char **envp);
+void print_cmds(t_cmd *cmd_lst);
 void dbg_print(char *s);
+void print_err_execve(char *s);
+int ft_strlen(char *s);
+
