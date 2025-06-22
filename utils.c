@@ -58,15 +58,12 @@ void add_cmd(t_cmd **cmd_lst, char **argv, int s, int e)
 	}
 }
 
-void ft_print_str(char *s)
-{
-	write(1, s, ft_strlen(s));
-}
+void print_err_execve(char *s) {
+	char *msg = "error: cannot execute ";
 
-void ft_print_strln(char *s)
-{
-	ft_print_str(s);
-	write(1, "\n", 1);
+	write(2, msg, ft_strlen(msg));
+	write(2, s, ft_strlen(s));
+	write(2, "\n", 1);
 }
 
 int ft_strlen(char *s)
