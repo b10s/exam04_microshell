@@ -53,6 +53,7 @@ int main(int argc, char **argv, char **envp)
 	print_cmds(cmd_lst);
 	dbg_print("\n");
 	exec_cmds(cmd_lst, envp);
+	free_cmd(cmd_lst);
 	return (0);
 }
 

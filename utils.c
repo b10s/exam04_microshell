@@ -46,3 +46,13 @@ void add_cmd(t_cmd **cmd_lst, char **argv, int s, int e)
 	}
 }
 
+void free_cmd(t_cmd *l) {
+	t_cmd *tmp;
+
+	while (l != NULL) {
+		free(l->argv);
+		tmp = l;
+		l = l->next;
+		free(tmp);
+	}
+}
