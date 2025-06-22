@@ -66,6 +66,12 @@ void print_err_execve(char *s) {
 	write(2, "\n", 1);
 }
 
+void dbg_print(char *s) {
+	if (DBG == 1) {
+		write(1, s, ft_strlen(s));
+	}
+}
+
 int ft_strlen(char *s)
 {
 	int	res;

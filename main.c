@@ -53,8 +53,9 @@ int main(int argc, char **argv, char **envp)
 }
 
 void usual_cmd(t_cmd *c, char **envp) {
-	printf("[ usual cmd ]\n");
 	pid_t cpid;
+
+	dbg_print("[ usual cmd ]\n");
 	cpid = fork();
 	if (cpid == 0) {
 		if (execve(c->argv[0], c->argv, envp) == -1)
@@ -66,10 +67,10 @@ void usual_cmd(t_cmd *c, char **envp) {
 }
 
 pid_t l_child(t_cmd *c, int l_pipe[2], int r_pipe[2], char **envp) {
-	//printf("[ left child ]\n");
 	//printf("l [%d][%d], r [%d][%d]\n", l_pipe[0], l_pipe[1], r_pipe[0], r_pipe[1]);
 	pid_t cpid;
 
+	dbg_print("[ left child ]\n");
 	cpid = fork();
 	if (cpid == 0) {
 		close(l_pipe[0]);
@@ -86,10 +87,10 @@ pid_t l_child(t_cmd *c, int l_pipe[2], int r_pipe[2], char **envp) {
 }
 
 void r_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid, char **envp) {
-	//printf("[ right child ]\n");
 	//printf("l [%d][%d], r [%d][%d]\n", l_pipe[0], l_pipe[1], r_pipe[0], r_pipe[1]);
 	pid_t cpid;
 
+	dbg_print("[ right child ]\n");
 	cpid = fork();
 	if (cpid == 0) {
 		close(r_pipe[0]);
@@ -108,10 +109,10 @@ void r_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid, char **envp) {
 }
 
 pid_t m_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid, char **envp) {
-	//printf("[ middle child ]\n");
 	//printf("l [%d][%d], r [%d][%d]\n", l_pipe[0], l_pipe[1], r_pipe[0], r_pipe[1]);
 	pid_t cpid;
 
+	dbg_print("[ middle child ]\n");
 	cpid = fork();
 	if (cpid == 0) {
 		close(l_pipe[1]);
@@ -132,15 +133,14 @@ pid_t m_child(t_cmd *c, int l_pipe[2], int r_pipe[2], pid_t l_pid, char **envp) 
 
 void exec_cmds(t_cmd *l, char **envp)
 {
-	printf("\nexecuting..\n");
 	int	prev_was_pipe = 0;
 	pid_t l_pid;
-
 	int l_pipe[2];
 	int r_pipe[2];
 	pipe(l_pipe);
 	pipe(r_pipe);
 
+	dbg_print("\nexecuting..\n");
 	while (l != NULL) {
 		if (l->delim == PIPE) {
 			if (prev_was_pipe == 1) {
@@ -157,8 +157,7 @@ void exec_cmds(t_cmd *l, char **envp)
 			}
 			prev_was_pipe = 0;
 		}
-		printf("next..\n");
-
+		dbg_print("next..\n");
 		l = l->next;
 		close(l_pipe[0]);
 		close(l_pipe[1]);

@@ -9,6 +9,8 @@
 #define SEMI 2
 #define LAST 3
 
+#define DBG 1
+
 typedef struct cmd {
 	char	**argv;
 	int	delim;
@@ -22,4 +24,4 @@ void ft_print_strln(char *s);
 void print_cmds(t_cmd *cmd_lst);
 void exec_cmds(t_cmd *l, char **envp);
 void print_err_execve(char *s);
-
+void dbg_print(char *s);
